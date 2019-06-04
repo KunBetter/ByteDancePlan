@@ -4,7 +4,7 @@ translator = Translator()
 
 
 def googleTranslate(english):
-    return translator.translate(english, dest='zh-cn').text
+    return translator.translate(english, 'zh-cn').text
 
 
 if __name__ == '__main__':
