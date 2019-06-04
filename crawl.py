@@ -2,10 +2,10 @@ import requests
 import bs4
 import translate
 
-example_url = 'https://www.refinery29.com/en-gb/george-rr-martin-requested-bran-become-king-game-of-thrones'
+example_url = 'https://www.refinery29.com/en-gb/ginkgo-natural-ingredient-for-acne-eczema'
 
 
-def crawl_one_page_process(url, raw=False):
+def crawl_refinery29_detail_page(url, raw=False):
     # page
     response = requests.get(url)
     page_soup = bs4.BeautifulSoup(response.text, "lxml")
@@ -31,4 +31,4 @@ def crawl_one_page_process(url, raw=False):
 
 
 if __name__ == '__main__':
-    crawl_one_page_process(example_url, True)
+    crawl_refinery29_detail_page(example_url, True)
