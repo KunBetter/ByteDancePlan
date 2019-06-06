@@ -2,7 +2,9 @@ import requests
 import bs4
 import translate
 
-example_url = 'https://www.refinery29.com/en-gb/ginkgo-natural-ingredient-for-acne-eczema'
+
+def crawl_beautiful_mess_detail_page(url, raw=False):
+    print('!')
 
 
 def crawl_refinery29_detail_page(url, raw=False):
@@ -31,4 +33,8 @@ def crawl_refinery29_detail_page(url, raw=False):
 
 
 if __name__ == '__main__':
-    crawl_refinery29_detail_page(example_url, True)
+    a_beautiful_mess_one_page_url = 'https://abeautifulmess.com/'
+    crawl_beautiful_mess_detail_page(a_beautiful_mess_one_page_url, True)
+
+    refinery29_one_page_url = 'https://www.refinery29.com/en-gb/ginkgo-natural-ingredient-for-acne-eczema'
+    crawl_refinery29_detail_page(refinery29_one_page_url, True)
