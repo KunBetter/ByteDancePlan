@@ -59,13 +59,14 @@ def crawl_refinery29(url):
         print('Translating: ' + resource)
         url, title, cn_title, text, cn_text, cn_text_len = crawl_refinery29_detail_page(resource)
         progress_rate = progress_rate + 1
-        fn.write('===================================================================\n')
-        fn.write('【原文链接】 ' + url + '\n')
-        fn.write('【原文标题】 ' + title + '\n')
-        fn.write('【谷歌翻译标题】 ' + cn_title + '\n')
-        fn.write('【谷歌翻译正文字数】 ' + str(cn_text_len) + '\n')
-        fn.write('【原文正文】\n' + text + '\n')
-        fn.write('【谷歌翻译正文】\n' + cn_text + '\n')
+        if 0 < cn_text_len <= 1500:
+            fn.write('=====================================================================================\n')
+            fn.write('【原文链接】 ' + url + '\n')
+            fn.write('【原文标题】 ' + title + '\n')
+            fn.write('【谷歌翻译标题】 ' + cn_title + '\n')
+            fn.write('【谷歌翻译正文字数】 ' + str(cn_text_len) + '\n')
+            fn.write('【原文正文】\n' + text + '\n')
+            fn.write('【谷歌翻译正文】\n' + cn_text + '\n')
         if progress_rate % 5 == 0:
             print('Has Translate ' + str(progress_rate) + ' pages ...')
         time.sleep(2)
@@ -77,13 +78,14 @@ def crawl_refinery29(url):
         print('Translating: ' + resource)
         url, title, cn_title, text, cn_text, cn_text_len = crawl_refinery29_detail_page(resource)
         progress_rate = progress_rate + 1
-        fn.write('===================================================================\n')
-        fn.write('【原文链接】 ' + url + '\n')
-        fn.write('【原文标题】 ' + title + '\n')
-        fn.write('【谷歌翻译标题】 ' + cn_title + '\n')
-        fn.write('【谷歌翻译正文字数】 ' + str(cn_text_len) + '\n')
-        fn.write('【原文正文】\n' + text + '\n')
-        fn.write('【谷歌翻译正文】\n' + cn_text + '\n')
+        if 0 < cn_text_len <= 1500:
+            fn.write('=====================================================================================\n')
+            fn.write('【原文链接】 ' + url + '\n')
+            fn.write('【原文标题】 ' + title + '\n')
+            fn.write('【谷歌翻译标题】 ' + cn_title + '\n')
+            fn.write('【谷歌翻译正文字数】 ' + str(cn_text_len) + '\n')
+            fn.write('【原文正文】\n' + text + '\n')
+            fn.write('【谷歌翻译正文】\n' + cn_text + '\n')
         if progress_rate % 5 == 0:
             print('Has Translate ' + str(progress_rate) + ' pages ...')
         time.sleep(2)
@@ -101,6 +103,8 @@ def crawl_refinery29_detail_page(url, debug=False):
     article_soup = bs4.BeautifulSoup(str(page_article), 'lxml')
     # title
     title_nodes = article_soup.findAll("div", {"class": "header"})
+    if len(title_nodes) <= 0:
+        return url, '', '', '', '', 0
     title_soup = bs4.BeautifulSoup(str(title_nodes[0]), 'lxml')
     title_node = title_soup.findAll("h1", {"class": "title"})
     title = title_node[0].text
