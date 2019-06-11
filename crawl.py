@@ -57,8 +57,7 @@ def crawl_refinery29(url):
     latest_news_2 = list(set(latest_news))
     for resource in latest_news_2:
         print('Translating: ' + resource)
-        url, title, cn_title, text, cn_text, cn_text_len = crawl_refinery29_detail_page(
-            resource)
+        url, title, cn_title, text, cn_text, cn_text_len = crawl_refinery29_detail_page(resource)
         progress_rate = progress_rate + 1
         if 0 < cn_text_len <= 1500:
             fn.write('=====================================================================================\n')
@@ -66,7 +65,7 @@ def crawl_refinery29(url):
             fn.write('【原文标题】 ' + title + '\n')
             fn.write('【谷歌翻译标题】 ' + cn_title + '\n')
             fn.write('【谷歌翻译正文字数】 ' + str(cn_text_len) + '\n')
-            fn.write('【原文正文】\n' + text + '\n')
+            fn.write('【原文正文】\n' + text)
             fn.write('【谷歌翻译正文】\n' + cn_text + '\n')
         if progress_rate % 5 == 0:
             print('Has Translate ' + str(progress_rate) + ' pages ...')
@@ -77,8 +76,7 @@ def crawl_refinery29(url):
     trending_and_now_on_r29_2 = list(set(trending_and_now_on_r29))
     for resource in trending_and_now_on_r29_2:
         print('Translating: ' + resource)
-        url, title, cn_title, text, cn_text, cn_text_len = crawl_refinery29_detail_page(
-            resource)
+        url, title, cn_title, text, cn_text, cn_text_len = crawl_refinery29_detail_page(resource)
         progress_rate = progress_rate + 1
         if 0 < cn_text_len <= 1500:
             fn.write('=====================================================================================\n')
@@ -86,7 +84,7 @@ def crawl_refinery29(url):
             fn.write('【原文标题】 ' + title + '\n')
             fn.write('【谷歌翻译标题】 ' + cn_title + '\n')
             fn.write('【谷歌翻译正文字数】 ' + str(cn_text_len) + '\n')
-            fn.write('【原文正文】\n' + text + '\n')
+            fn.write('【原文正文】\n' + text)
             fn.write('【谷歌翻译正文】\n' + cn_text + '\n')
         if progress_rate % 5 == 0:
             print('Has Translate ' + str(progress_rate) + ' pages ...')
@@ -120,7 +118,7 @@ def crawl_refinery29_detail_page(url, debug=False):
     text_2_translate = []
     for content in contents:
         content_soup = bs4.BeautifulSoup(str(content), 'lxml')
-        text += content_soup.text + ' '
+        text += content_soup.text + '\n'
         text_len += len(content_soup.text)
         if text_len > 1500:
             text_2_translate.append(text)
