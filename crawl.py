@@ -57,16 +57,19 @@ def crawl_refinery29(url):
     latest_news_2 = list(set(latest_news))
     for resource in latest_news_2:
         print('Translating: ' + resource)
-        url, title, cn_title, text, cn_text, cn_text_len = crawl_refinery29_detail_page(resource)
+        url, title, cn_title, yd_cn_title, text, cn_text, yd_cn_text, cn_text_len = crawl_refinery29_detail_page(
+            resource)
         progress_rate = progress_rate + 1
         if 0 < cn_text_len <= 1500:
             fn.write('=====================================================================================\n')
             fn.write('【原文链接】 ' + url + '\n')
             fn.write('【原文标题】 ' + title + '\n')
             fn.write('【谷歌翻译标题】 ' + cn_title + '\n')
+            fn.write('【有道翻译标题】 ' + yd_cn_title + '\n')
             fn.write('【谷歌翻译正文字数】 ' + str(cn_text_len) + '\n')
             fn.write('【原文正文】\n' + text + '\n')
             fn.write('【谷歌翻译正文】\n' + cn_text + '\n')
+            fn.write('【有道翻译正文】\n' + yd_cn_text + '\n')
         if progress_rate % 5 == 0:
             print('Has Translate ' + str(progress_rate) + ' pages ...')
         time.sleep(2)
@@ -76,16 +79,19 @@ def crawl_refinery29(url):
     trending_and_now_on_r29_2 = list(set(trending_and_now_on_r29))
     for resource in trending_and_now_on_r29_2:
         print('Translating: ' + resource)
-        url, title, cn_title, text, cn_text, cn_text_len = crawl_refinery29_detail_page(resource)
+        url, title, cn_title, yd_cn_title, text, cn_text, yd_cn_text, cn_text_len = crawl_refinery29_detail_page(
+            resource)
         progress_rate = progress_rate + 1
         if 0 < cn_text_len <= 1500:
             fn.write('=====================================================================================\n')
             fn.write('【原文链接】 ' + url + '\n')
             fn.write('【原文标题】 ' + title + '\n')
             fn.write('【谷歌翻译标题】 ' + cn_title + '\n')
+            fn.write('【有道翻译标题】 ' + yd_cn_title + '\n')
             fn.write('【谷歌翻译正文字数】 ' + str(cn_text_len) + '\n')
             fn.write('【原文正文】\n' + text + '\n')
             fn.write('【谷歌翻译正文】\n' + cn_text + '\n')
+            fn.write('【有道翻译正文】\n' + yd_cn_text + '\n')
         if progress_rate % 5 == 0:
             print('Has Translate ' + str(progress_rate) + ' pages ...')
         time.sleep(2)
@@ -104,11 +110,12 @@ def crawl_refinery29_detail_page(url, debug=False):
     # title
     title_nodes = article_soup.findAll("div", {"class": "header"})
     if len(title_nodes) <= 0:
-        return url, '', '', '', '', 0
+        return url, '', '', '', '', '', '', 0
     title_soup = bs4.BeautifulSoup(str(title_nodes[0]), 'lxml')
     title_node = title_soup.findAll("h1", {"class": "title"})
     title = title_node[0].text
-    cn_title = translate.googleTranslate(title)
+    cn_title = translate.google_translate(title)
+    yd_cn_title = translate.youdao_translate(title)
     # content
     content_nodes = article_soup.findAll("div", {"id": "article-main-content"})
     content_soup = bs4.BeautifulSoup(str(content_nodes[0]), 'lxml')
@@ -128,13 +135,15 @@ def crawl_refinery29_detail_page(url, debug=False):
         text_2_translate.append(text)
     text = ''
     cn_text = ''
+    yd_cn_text = ''
     for t2t in text_2_translate:
         text += t2t
-        cn_text += translate.googleTranslate(t2t)
+        cn_text += translate.google_translate(t2t)
+        yd_cn_text += translate.youdao_translate(t2t)
     cn_text_len = len(cn_text)
     if debug:
-        print(url, title, cn_title, text, cn_text, cn_text_len)
-    return url, title, cn_title, text, cn_text, cn_text_len
+        print(url, title, cn_title, yd_cn_title, text, cn_text, yd_cn_text, cn_text_len)
+    return url, title, cn_title, yd_cn_title, text, cn_text, yd_cn_text, cn_text_len
 
 
 if __name__ == '__main__':
