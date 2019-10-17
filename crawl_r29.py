@@ -4,6 +4,10 @@ import bs4
 import translate
 
 
+def crawl_refinery29_entertainment(url):
+    print('')
+
+
 def crawl_refinery29(url):
     # page
     response = requests.get(url)
@@ -119,6 +123,8 @@ def crawl_refinery29_detail_page(url, debug=False):
 
 if __name__ == '__main__':
     crawl_refinery29('https://www.refinery29.com')
+
+    crawl_refinery29_entertainment('https://www.refinery29.com/en-us/entertainment')
 
     # refinery29_one_page_url = 'https://www.refinery29.com/en-us/2019/06/234852/how-to-watch-womens-world-cup-2019-live-stream'
     # crawl_refinery29_detail_page(refinery29_one_page_url, True)
